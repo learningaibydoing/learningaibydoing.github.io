@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Four hands-on encounters with the ideas behind machine learning.">
+  <meta name="theme-color" content="#f7f6f2">
+  <title>Learning AI by Doing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="Learning AI by Doing, home">
+      <span class="wordmark-mark" aria-hidden="true"></span>
+      <span>Learning AI<br>by Doing</span>
+    </a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#about">About</a>
+      <a href="#exercises">Exercises</a>
+      <a href="#shared-lesson">Shared lesson</a>
+    </nav>
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-nav">Menu</button>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
+      <a href="#about">About</a>
+      <a href="#exercises">Exercises</a>
+      <a href="#shared-lesson">Shared lesson</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="page-title">
+      <div class="hero-kicker">A participatory guide to machine learning</div>
+      <h1 id="page-title">Learning AI<br>by <em>Doing</em></h1>
+      <p class="hero-subtitle">Hands-on encounters with the ideas behind machine learning</p>
+      <div class="hero-grid">
+        <p class="hero-intro">Artificial intelligence often arrives as a finished product: a chatbot answers, an image appears, or a feed seems to know what we want. The inner workings of the machinery remain out of sight.</p>
+        <p>This project brings a few of those hidden processes into the room, where we can touch them, change them, question them, and watch the calculations unfold step by step.</p>
+      </div>
+      <a class="outline-link" href="#exercises">Explore the exercises</a>
+    </section>
+
+    <section class="intro-section" id="about" aria-labelledby="about-title">
+      <div class="section-label">About the project</div>
+      <div class="intro-copy">
+        <h2 id="about-title">Curiosity and lived experience are enough.</h2>
+        <p>It is designed for people meeting AI for the first time, including students, humanities scholars, educators, artists, community members, and workers whose fields are being reshaped by automated systems. No coding or mathematical background is required.</p>
+        <p>Work through the exercises alone, with a partner, or as a group. Begin by making a prediction. Interact with the system. Notice what surprises you. Then change one thing and try again. The discussion after each experiment is as important as the result on the screen.</p>
+        <p class="rhythm"><span>Predict</span><span>Try</span><span>Observe</span><span>Change</span><span>Discuss</span></p>
+      </div>
+    </section>
+
+    <section class="overview" id="exercises" aria-labelledby="overview-title">
+      <div class="section-label">At a glance</div>
+      <h2 id="overview-title">Four rooms.<br>Four ways to see AI differently.</h2>
+      <ol class="exercise-index">
+        <li><a href="#listener"><span>01</span><strong>Room Listener Classifier</strong><small>Learning from labeled examples</small></a></li>
+        <li><a href="#storyteller"><span>02</span><strong>Room Storyteller</strong><small>Predicting the next word</small></a></li>
+        <li><a href="#painter"><span>03</span><strong>Room Painter</strong><small>Making an image from static</small></a></li>
+        <li><a href="#matcher"><span>04</span><strong>Room Taste Matcher</strong><small>Shaping a personalized feed</small></a></li>
+      </ol>
+    </section>
+
+    <article class="exercise" id="listener">
+      <header class="exercise-header">
+        <div class="exercise-number">01 / 04</div>
+        <h2>Room Listener<br>Classifier</h2>
+        <p class="exercise-tagline">Learning from examples</p>
+      </header>
+      <div class="exercise-body">
+        <section>
+          <h3>What this experience reveals</h3>
+          <p>Many machine-learning systems are not programmed with a complete set of rules. Instead, people give them examples with labels attached. The system looks for recurring patterns and uses those patterns to classify something new.</p>
+          <p>Here, the room teaches a listener to sort sentences into four feelings: Grateful, Missing Someone, Worried, and Hopeful. It does not feel emotions or understand a sentence as a person would. It counts patterns in the words it has been shown and calculates which label seems to fit best.</p>
+        </section>
+        <section class="concepts">
+          <h3>Concepts made visible</h3>
+          <dl>
+            <div><dt>Training data</dt><dd>The examples used to teach the system.</dd></div>
+            <div><dt>Labels</dt><dd>The human-chosen categories attached to those examples.</dd></div>
+            <div><dt>Features</dt><dd>The clues the system pays attention to, such as particular words.</dd></div>
+            <div><dt>Classification</dt><dd>Sorting something new into one of several categories.</dd></div>
+            <div><dt>Confidence</dt><dd>How strongly the model favors an answer—not whether it is true.</dd></div>
+            <div><dt>Bias</dt><dd>A tendency produced by narrow, uneven, or assumed examples.</dd></div>
+          </dl>
+        </section>
+        <section class="instructions">
+          <h3>How to interact</h3>
+          <ol>
+            <li>Read the four feeling labels and review the starter sentences.</li>
+            <li>Add one or two sentences of your own to each category. Include different voices and situations.</li>
+            <li>Select <strong>Train the listener</strong> to learn from the examples on the page.</li>
+            <li>Enter a new sentence and ask the listener to classify it.</li>
+            <li>Compare the confidence bars. Notice which words it recognized and which it ignored.</li>
+            <li>Make one category uneven, retrain, and observe how the results shift.</li>
+          </ol>
+        </section>
+        <aside class="questions">
+          <h3>Questions to ask together</h3>
+          <ul>
+            <li>Can the system sound confident and still be wrong?</li>
+            <li>Whose language might not fit these four labels?</li>
+            <li>Who gets to choose the examples and categories?</li>
+          </ul>
+        </aside>
+      </div>
+      <button class="embed-slot" type="button" data-experience="listener" aria-expanded="false">
+        <span>Interactive experience</span>
+        <strong>Room Listener Classifier</strong>
+        <span class="development-message" aria-live="polite" hidden>Content in development.</span>
+      </button>
+    </article>
+
+    <article class="exercise" id="storyteller">
+      <header class="exercise-header">
+        <div class="exercise-number">02 / 04</div>
+        <h2>Room<br>Storyteller</h2>
+        <p class="exercise-tagline">Predicting the next word</p>
+      </header>
+      <div class="exercise-body">
+        <section>
+          <h3>What this experience reveals</h3>
+          <p>A text generator produces language one small step at a time. Given the words that came before, it estimates which word might come next. It chooses one, adds it to the sequence, and repeats. This can produce remarkably fluent writing. Fluency, however, is not evidence of knowledge or truth.</p>
+          <p>The room gives the storyteller two short bodies of writing. Participants inspect its predictions, choose the next word themselves, or let the program continue. The experience makes probability visible and shows how source material shapes a generated voice.</p>
+        </section>
+        <section class="concepts">
+          <h3>Concepts made visible</h3>
+          <dl>
+            <div><dt>Language model</dt><dd>A system that estimates likely continuations of text.</dd></div>
+            <div><dt>Prediction</dt><dd>Choosing the next small unit from several possibilities.</dd></div>
+            <div><dt>Probability</dt><dd>The relative likelihood assigned to each possibility.</dd></div>
+            <div><dt>Context</dt><dd>The words already present that influence what may come next.</dd></div>
+            <div><dt>Training corpus</dt><dd>The writing from which a model learns patterns.</dd></div>
+            <div><dt>Hallucination</dt><dd>Plausible-sounding language that is unsupported or untrue.</dd></div>
+          </dl>
+        </section>
+        <section class="instructions">
+          <h3>How to interact</h3>
+          <ol>
+            <li>Enter two short texts with different voices, such as a recipe and a memory.</li>
+            <li>Select <strong>Teach the storyteller</strong>.</li>
+            <li>Enter a few opening words and predict what it will offer next.</li>
+            <li>Study the suggested words and percentages, then choose one.</li>
+            <li>Compare your choice with <strong>Pick one for me</strong>.</li>
+            <li>Use the same opening with both sources and compare the tone.</li>
+            <li>Mark what sounds fluent, repetitive, surprising, or false.</li>
+          </ol>
+        </section>
+        <aside class="questions">
+          <h3>Questions to ask together</h3>
+          <ul>
+            <li>Where does the storyteller’s “voice” come from?</li>
+            <li>Why can a likely next word lead to an incorrect claim?</li>
+            <li>What responsibilities come with choosing the source texts?</li>
+          </ul>
+        </aside>
+      </div>
+      <button class="embed-slot" type="button" data-experience="storyteller" aria-expanded="false">
+        <span>Interactive experience</span>
+        <strong>Room Storyteller</strong>
+        <span class="development-message" aria-live="polite" hidden>Content in development.</span>
+      </button>
+    </article>
+
+    <article class="exercise" id="painter">
+      <header class="exercise-header">
+        <div class="exercise-number">03 / 04</div>
+        <h2>Room<br>Painter</h2>
+        <p class="exercise-tagline">Making an image from static</p>
+      </header>
+      <div class="exercise-body">
+        <section>
+          <h3>What this experience reveals</h3>
+          <p>Many image generators begin with visual noise and repeatedly alter it until an image emerges. At each step, the system moves the noisy picture toward patterns learned from examples. The process can feel like discovery, but its possibilities have already been shaped by training material and by human decisions connecting words and images.</p>
+          <p>Participants make a small collection of drawings and attach words to them. The painter begins with static, then settles the image step by step under the influence of those drawings and descriptions.</p>
+        </section>
+        <section class="concepts">
+          <h3>Concepts made visible</h3>
+          <dl>
+            <div><dt>Training images</dt><dd>The examples from which the system learns visual patterns.</dd></div>
+            <div><dt>Prompt or label</dt><dd>Words used to guide what kind of image should appear.</dd></div>
+            <div><dt>Noise</dt><dd>Random visual information that becomes the starting point.</dd></div>
+            <div><dt>Denoising</dt><dd>Repeatedly changing noise into a structured image.</dd></div>
+            <div><dt>Latent pattern</dt><dd>A compressed relationship among shapes, colors, and labels.</dd></div>
+            <div><dt>Dataset bias</dt><dd>Limits inherited from what the collection includes and excludes.</dd></div>
+          </dl>
+        </section>
+        <section class="instructions">
+          <h3>How to interact</h3>
+          <ol>
+            <li>Create several small drawings—some similar, some deliberately different.</li>
+            <li>Give each drawing a short label or description.</li>
+            <li>Teach the painter using the current collection.</li>
+            <li>Choose a prompt and begin with a field of static.</li>
+            <li>Watch the image settle. Notice which forms appear first.</li>
+            <li>Remove, add, or rename an example and generate again.</li>
+            <li>Look for resemblance, blending, repetition, and absence.</li>
+          </ol>
+        </section>
+        <aside class="questions">
+          <h3>Questions to ask together</h3>
+          <ul>
+            <li>When does influence become imitation or copying?</li>
+            <li>What images are impossible if they are absent from training?</li>
+            <li>Whose work and labor might be hidden in a commercial generator?</li>
+          </ul>
+        </aside>
+      </div>
+      <button class="embed-slot" type="button" data-experience="painter" aria-expanded="false">
+        <span>Interactive experience</span>
+        <strong>Room Painter</strong>
+        <span class="development-message" aria-live="polite" hidden>Content in development.</span>
+      </button>
+    </article>
+
+    <article class="exercise" id="matcher">
+      <header class="exercise-header">
+        <div class="exercise-number">04 / 04</div>
+        <h2>Room Taste<br>Matcher</h2>
+        <p class="exercise-tagline">How recommendations shape what we see</p>
+      </header>
+      <div class="exercise-body">
+        <section>
+          <h3>What this experience reveals</h3>
+          <p>Recommendation systems organize much of everyday life: news feeds, music, films, shopping, job listings, and workplace dashboards. They often predict what we may want by comparing our behavior with other people. A recommendation is not simply a reflection of taste. It can influence what we encounter next.</p>
+          <p>Participants respond to activities and posts. The matcher compares those choices with other profiles, identifies nearby tastes, and builds a feed. Changing how many neighbors it follows shows how personalization can create variety, sameness, or a narrow bubble.</p>
+        </section>
+        <section class="concepts">
+          <h3>Concepts made visible</h3>
+          <dl>
+            <div><dt>Recommendation system</dt><dd>A program that ranks or suggests items.</dd></div>
+            <div><dt>Collaborative filtering</dt><dd>Predicting preferences from the choices of similar people.</dd></div>
+            <div><dt>Personalization</dt><dd>Showing different people different results.</dd></div>
+            <div><dt>Popularity ranking</dt><dd>Favoring what many people already chose.</dd></div>
+            <div><dt>Cold start</dt><dd>The difficulty of predicting before enough is known.</dd></div>
+            <div><dt>Filter bubble</dt><dd>A narrowed view created by repeatedly showing familiar preferences.</dd></div>
+            <div><dt>Transparency</dt><dd>Making the reason for a recommendation open to question.</dd></div>
+          </dl>
+        </section>
+        <section class="instructions">
+          <h3>How to interact</h3>
+          <ol>
+            <li>Create a participant profile and respond to the opening activities.</li>
+            <li>Review who the matcher considers similar to you.</li>
+            <li>Open your feed and use <strong>Why am I seeing this?</strong></li>
+            <li>Like or dislike a few posts, then refresh the feed.</li>
+            <li>Switch between following one similar person, several people, and everyone.</li>
+            <li>Compare your feed with a popular feed or another participant’s.</li>
+            <li>Look for the items that never reach you.</li>
+          </ol>
+        </section>
+        <aside class="questions">
+          <h3>Questions to ask together</h3>
+          <ul>
+            <li>Does the feed reflect your preferences, or produce them?</li>
+            <li>Who benefits when a feed optimizes for attention?</li>
+            <li>What should a meaningful explanation contain?</li>
+          </ul>
+        </aside>
+      </div>
+      <button class="embed-slot" type="button" data-experience="matcher" aria-expanded="false">
+        <span>Interactive experience</span>
+        <strong>Room Taste Matcher</strong>
+        <span class="development-message" aria-live="polite" hidden>Content in development.</span>
+      </button>
+    </article>
+
+    <section class="shared-lesson" id="shared-lesson" aria-labelledby="shared-title">
+      <div class="section-label">What these exercises share</div>
+      <h2 id="shared-title">What goes in shapes what comes out.</h2>
+      <div class="shared-copy">
+        <p>Across all four experiences, the machine does not encounter the world directly. It works through traces selected by people: sentences placed under labels, texts chosen as examples, drawings paired with words, and clicks treated as signs of preference.</p>
+        <p>Machine learning transforms examples into patterns. Those patterns can amplify assumptions, erase differences, or create unexpected combinations. Learning to use AI therefore requires more than operating a tool. It requires inspecting the relationship among data, design, power, and consequence.</p>
+      </div>
+    </section>
+
+    <section class="invitation" aria-labelledby="invitation-title">
+      <div class="section-label">A final invitation</div>
+      <h2 id="invitation-title">Bring your skepticism.<br>Bring your imagination.</h2>
+      <p>Treat each prototype as the beginning of a conversation rather than a demonstration with one correct conclusion. Professional knowledge, cultural memory, ethical judgment, skepticism, and imagination are not obstacles to technical understanding. They are among the most important tools we have for deciding what artificial intelligence should—and should not—become.</p>
+      <a class="outline-link light" href="#top">Return to the beginning</a>
+    </section>
+  </main>
+
+  <footer>
+    <div>Learning AI by Doing</div>
+    <p>A hands-on introduction to machine learning.</p>
+    <div>Designed for inquiry, conversation, and first encounters.</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
