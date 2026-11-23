@@ -110,8 +110,10 @@ h1, h2, h3 { margin: 0; line-height: .98; letter-spacing: -.04em; }
 .invitation p { max-width: 48rem; margin-left: auto; font-size: clamp(1.05rem, 1.5vw, 1.35rem); }
 .outline-link.light { color: white; margin-top: 4rem; }
 
-footer { max-width: var(--max); margin: 0 auto; padding: 2rem var(--pad); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; font-size: .78rem; }
+footer { max-width: var(--max); margin: 0 auto; padding: 2.5rem var(--pad); display: grid; grid-template-columns: 1fr minmax(20rem, 1.25fr); gap: clamp(3rem, 10vw, 10rem); font-size: .85rem; line-height: 1.45; }
+footer strong { display: block; margin-bottom: .4rem; font-size: .9rem; }
 footer p { margin: 0; }
+.footer-authors p + p { margin-top: .55rem; }
 
 @media (max-width: 760px) {
   .desktop-nav { display: none; }
