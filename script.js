@@ -16,9 +16,27 @@ mobileNav?.addEventListener('click', (event) => {
 
 document.querySelectorAll('.embed-slot').forEach((slot) => {
   slot.addEventListener('click', () => {
-    const message = slot.querySelector('.development-message');
-    if (!message) return;
-    message.hidden = false;
-    slot.setAttribute('aria-expanded', 'true');
+    const frameId = slot.getAttribute('aria-controls');
+    const frame = frameId ? document.getElementById(frameId) : null;
+    const src = slot.dataset.src;
+    if (!frame || !src) return;
+
+    const isExpanded = slot.getAttribute('aria-expanded') === 'true';
+    if (!frame.querySelector('iframe')) {
+      const iframe = document.createElement('iframe');
+      iframe.src = src;
+      iframe.title = slot.querySelector('strong')?.textContent || 'Interactive learning experiment';
+      iframe.loading = 'lazy';
+      iframe.setAttribute('allow', 'clipboard-write');
+      frame.append(iframe);
+    }
+
+    frame.hidden = isExpanded;
+    slot.setAttribute('aria-expanded', String(!isExpanded));
+    slot.querySelector('.launch-message').textContent = isExpanded ? 'Launch experiment' : 'Close experiment';
+
+    if (!isExpanded) {
+      requestAnimationFrame(() => frame.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    }
   });
 });

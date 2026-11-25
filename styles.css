@@ -102,7 +102,10 @@ h1, h2, h3 { margin: 0; line-height: .98; letter-spacing: -.04em; }
 .embed-slot:hover, .embed-slot:focus-visible { background-color: #fff; outline: 3px solid var(--accent); outline-offset: 4px; }
 .embed-slot strong { margin-top: .6rem; background: var(--paper); padding: .35rem .7rem; font-size: clamp(1.6rem, 4vw, 3.5rem); letter-spacing: -.04em; }
 .embed-slot span { background: var(--paper); padding: .2rem .45rem; }
-.embed-slot .development-message { margin-top: 1rem; color: var(--accent); font-size: 1rem; font-weight: 700; letter-spacing: 0; text-transform: none; }
+.embed-slot .launch-message { margin-top: 1rem; color: var(--accent); font-size: 1rem; font-weight: 700; letter-spacing: 0; text-transform: none; }
+.embed-slot[aria-expanded="true"] { min-height: 8rem; background-image: none; }
+.experiment-frame { margin-top: 1rem; border: 1px solid var(--accent); background: white; scroll-margin-top: 1rem; }
+.experiment-frame iframe { display: block; width: 100%; height: min(82vh, 60rem); min-height: 38rem; border: 0; }
 
 .shared-copy { grid-column: 2; }
 .invitation { background: var(--night); color: white; padding: clamp(5rem, 10vw, 10rem) max(var(--pad), calc((100vw - var(--max)) / 2 + var(--pad))); }
@@ -130,6 +133,7 @@ footer p { margin: 0; }
   .exercise-index small { grid-column: 2; }
   .exercise-body > section:first-child h3, .questions { grid-column: 1; }
   .questions ul { grid-template-columns: 1fr; }
+  .experiment-frame iframe { height: 75vh; min-height: 34rem; }
   footer { grid-template-columns: 1fr; }
 }
 

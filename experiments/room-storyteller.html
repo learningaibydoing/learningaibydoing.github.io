@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Room's Storyteller</title>
+<style>
+  :root {
+    --bg: #f6f1e7;
+    --card: #fffdf8;
+    --ink: #2a2420;
+    --muted: #6d625a;
+    --line: #d8ccba;
+    --accent: #2f5d62;
+    --accent-ink: #ffffff;
+    --a: #8a5a12;
+    --b: #3f4f85;
+    --warn: #8c4a4a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    font-size: 20px;
+    line-height: 1.45;
+  }
+  header.top { padding: 22px 32px 6px; }
+  h1 { margin: 0; font-size: 34px; font-weight: 600; }
+  .sub { margin: 4px 0 0; color: var(--muted); font-size: 19px; }
+  main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: 24px;
+    padding: 18px 32px 40px;
+    align-items: start;
+  }
+  @media (max-width: 1000px) { main { grid-template-columns: 1fr; } }
+  h2 { margin: 0 0 10px; font-size: 22px; font-weight: 600; }
+  .src {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-top: 8px solid var(--c);
+    border-radius: 10px;
+    padding: 10px 12px 12px;
+    margin-bottom: 14px;
+  }
+  .src .head { display: flex; justify-content: space-between; align-items: baseline; }
+  .src h3 { margin: 0; font-size: 22px; font-weight: 600; color: var(--c); }
+  .count { font-size: 17px; color: var(--muted); }
+  textarea, input[type=text] {
+    width: 100%;
+    font: inherit;
+    font-size: 19px;
+    color: var(--ink);
+    background: #fff;
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+  textarea { height: 170px; resize: vertical; margin-top: 6px; }
+  textarea:focus, input[type=text]:focus, button:focus-visible { outline: 3px solid #e0a52a; outline-offset: 1px; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
+  button {
+    font: inherit;
+    font-size: 20px;
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: 2px solid var(--accent);
+    background: var(--accent);
+    color: var(--accent-ink);
+    cursor: pointer;
+  }
+  button.secondary { background: transparent; color: var(--accent); }
+  button:disabled { opacity: 0.5; cursor: default; }
+  #status { font-size: 19px; color: var(--muted); min-height: 28px; margin-top: 10px; }
+  #status.warn { color: var(--warn); }
+  .panel { background: var(--card); border: 2px solid var(--line); border-radius: 10px; padding: 16px 18px 20px; }
+  .ctl { margin-top: 14px; }
+  .ctl .lab { font-size: 18px; color: var(--muted); margin-bottom: 4px; }
+  .seg { display: inline-flex; flex-wrap: wrap; }
+  .seg button {
+    background: #fff; color: var(--accent);
+    border-radius: 0; margin-left: -2px; padding: 8px 16px; font-size: 19px;
+  }
+  .seg button:first-child { border-radius: 8px 0 0 8px; margin-left: 0; }
+  .seg button:last-child { border-radius: 0 8px 8px 0; }
+  .seg button.on { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
+  .seg button.on::before { content: "\2713\00a0"; }
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  .chips button { padding: 6px 14px; font-size: 18px; background: transparent; color: var(--accent); }
+  .startrow { display: flex; gap: 10px; }
+  .startrow input { flex: 1; }
+  #story {
+    margin-top: 16px; min-height: 130px; padding: 14px 16px;
+    background: #fff; border: 2px solid var(--line); border-radius: 10px;
+    font-size: 32px; line-height: 1.35;
+  }
+  #story .last { font-weight: 700; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 5px; }
+  #story .empty { font-size: 20px; color: var(--muted); }
+  #lookNote { margin-top: 14px; font-size: 18px; color: var(--muted); min-height: 26px; }
+  #lookNote.warn { color: var(--warn); }
+  .choice {
+    display: grid; grid-template-columns: 210px 1fr 62px 84px; gap: 10px; align-items: center;
+    width: 100%; text-align: left; margin-top: 8px;
+    background: #fff; color: var(--ink); border: 2px solid var(--line); border-radius: 8px;
+    padding: 6px 12px; font-size: 21px;
+  }
+  .choice:hover:not(:disabled) { border-color: var(--accent); }
+  .choice .w { font-weight: 700; }
+  .track { background: #ece3d3; border-radius: 6px; height: 18px; overflow: hidden; display: block; }
+  .fill { display: block; height: 100%; background: var(--accent); }
+  .pct { text-align: right; font-variant-numeric: tabular-nums; }
+  .of { color: var(--muted); font-size: 16px; text-align: right; }
+  .more { color: var(--muted); font-size: 17px; margin-top: 6px; }
+  #compare { margin-top: 16px; display: none; gap: 14px; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 700px) { #compare { grid-template-columns: 1fr; } }
+  .cmp { background: #fff; border: 2px solid var(--line); border-top: 8px solid var(--c); border-radius: 10px; padding: 10px 14px 14px; font-size: 26px; line-height: 1.35; }
+  .cmp h4 { margin: 0 0 6px; font-size: 20px; color: var(--c); }
+  .cmp .new { font-weight: 700; }
+  .placeholder { color: var(--muted); }
+  details { margin-top: 18px; color: var(--muted); font-size: 17px; }
+  summary { cursor: pointer; }
+  #writeBody.off { opacity: 0.55; }
+  @media (max-width: 560px) { .choice { grid-template-columns: 110px 1fr 54px; } .choice .of { display: none; } #story { font-size: 26px; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>The Room's Storyteller</h1>
+  <p class="sub">It only knows the words typed in below. Nothing leaves this computer.</p>
+</header>
+
+<main>
+  <section>
+    <h2>1. What we taught it</h2>
+    <div class="src" style="--c:var(--a)">
+      <div class="head"><h3>Text A</h3><span class="count" id="countA"></span></div>
+      <textarea id="taA" aria-label="Text A" spellcheck="false"></textarea>
+    </div>
+    <div class="src" style="--c:var(--b)">
+      <div class="head"><h3>Text B</h3><span class="count" id="countB"></span></div>
+      <textarea id="taB" aria-label="Text B" spellcheck="false"></textarea>
+    </div>
+    <div class="row">
+      <button id="trainBtn">Teach the storyteller</button>
+      <button id="resetBtn" class="secondary">Reset to starter texts</button>
+      <button id="copyBtn" class="secondary">Copy texts</button>
+    </div>
+    <div id="status" role="status" aria-live="polite"></div>
+    <details>
+      <summary>Facilitator notes</summary>
+      <p>Type or paste a short passage into each box, such as a recipe, a few proverbs, or a memory. About five to ten sentences works well. Press Teach, then try the same starting words with each text. With very little text it tends to copy what it read. Texts are saved in this browser only.</p>
+    </details>
+  </section>
+
+  <section>
+    <div class="panel">
+      <h2>2. Let it write</h2>
+      <div id="writeBody" class="off">
+        <div class="ctl">
+          <div class="lab">Write like</div>
+          <div class="seg" id="segSrc" role="group" aria-label="Which text to write like">
+            <button data-v="A" class="on" aria-pressed="true">Text A</button><button data-v="B" aria-pressed="false">Text B</button>
+          </div>
+        </div>
+        <div class="ctl">
+          <div class="lab">It looks back at</div>
+          <div class="seg" id="segMem" role="group" aria-label="How far back it looks">
+            <button data-v="1" aria-pressed="false">The last word</button><button data-v="2" class="on" aria-pressed="true">The last two words</button>
+          </div>
+        </div>
+        <div class="ctl">
+          <div class="lab">How bold it is</div>
+          <div class="seg" id="segBold" role="group" aria-label="How bold it is">
+            <button data-v="careful" aria-pressed="false">Careful</button><button data-v="balanced" class="on" aria-pressed="true">Balanced</button><button data-v="adventurous" aria-pressed="false">Adventurous</button>
+          </div>
+        </div>
+        <div class="ctl">
+          <div class="lab">Start with a few words</div>
+          <div class="startrow">
+            <input type="text" id="startInput" placeholder="For example: I love" autocomplete="off">
+            <button id="beginBtn">Begin</button>
+          </div>
+          <div class="chips" id="chips">
+            <button class="secondary" data-s="I love">I love</button>
+            <button class="secondary" data-s="In the">In the</button>
+            <button class="secondary" data-s="We talk about">We talk about</button>
+          </div>
+        </div>
+
+        <div id="story" aria-live="polite"><span class="empty">Choose a start, then pick a word.</span></div>
+        <div id="lookNote"></div>
+        <div id="choices"></div>
+        <div class="more" id="moreNote"></div>
+
+        <div class="row">
+          <button id="pickBtn" class="secondary">Pick one for me</button>
+          <button id="writeBtn">Let it write</button>
+          <button id="cmpBtn" class="secondary">Compare both texts</button>
+          <button id="clearBtn" class="secondary">Start over</button>
+        </div>
+        <div id="compare"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  var STARTER = {
+    A: "I love my garden. I love my family. I love to walk in the morning. In the morning I make tea. I make tea and I read the paper. I read the paper and I call my sister. My sister loves her garden too. We talk about the garden and the weather. In the evening I make soup for my family. I love a quiet evening.",
+    B: "I love to travel. I love the sea. I love to see new places. In the summer we drive to the coast. We drive to the coast and we watch the boats. We watch the boats and we eat fresh fish. My brother loves the sea too. We talk about the next trip and the weather. In the autumn I plan a new trip. I love a good adventure."
+  };
+  var STORE_KEY = "roomStoryteller.v1";
+
+  var $ = function (id) { return document.getElementById(id); };
+  var els = {
+    taA: $("taA"), taB: $("taB"), countA: $("countA"), countB: $("countB"),
+    train: $("trainBtn"), reset: $("resetBtn"), copy: $("copyBtn"), status: $("status"),
+    body: $("writeBody"), start: $("startInput"), begin: $("beginBtn"),
+    story: $("story"), look: $("lookNote"), choices: $("choices"), more: $("moreNote"),
+    pick: $("pickBtn"), write: $("writeBtn"), cmp: $("cmpBtn"), clear: $("clearBtn"), compare: $("compare")
+  };
+
+  var models = null;           // { A: model, B: model } once taught
+  var story = [];              // tokens so far
+  var opts = { src: "A", mem: 2, bold: "balanced" };
+
+  /* ---------- text to tokens ---------- */
+
+  function isEnd(t) { return t === "." || t === "!" || t === "?"; }
+
+  function tokenize(text, addEnd) {
+    var raw = String(text).toLowerCase().replace(/[‘’]/g, "'").replace(/\n+/g, " . ");
+    var found = raw.match(/[a-z0-9]+(?:'[a-z]+)?|[.!?,]/g) || [];
+    var out = [];
+    found.forEach(function (t) {
+      if (isEnd(t) && out.length && isEnd(out[out.length - 1])) return;
+      out.push(t);
+    });
+    if (addEnd && out.length && !isEnd(out[out.length - 1])) out.push(".");
+    return out;
+  }
+
+  /* ---------- teaching: count which word follows which ---------- */
+
+  function learn(text) {
+    var toks = ["."].concat(tokenize(text, true));
+    var m = { t1: {}, t2: {}, uni: {}, words: 0, vocab: 0 };
+    var seen = {};
+    for (var i = 1; i < toks.length; i++) {
+      var next = toks[i], last = toks[i - 1];
+      bump(m.t1, last, next);
+      if (i >= 2) bump(m.t2, toks[i - 2] + " " + last, next);
+      if (!/^[.!?,]$/.test(next)) {
+        m.uni[next] = (m.uni[next] || 0) + 1;
+        m.words++;
+        seen[next] = 1;
+      }
+    }
+    m.vocab = Object.keys(seen).length;
+    return m;
+  }
+  function bump(table, key, next) {
+    if (!table[key]) table[key] = {};
+    table[key][next] = (table[key][next] || 0) + 1;
+  }
+
+  /* ---------- what could come next ---------- */
+
+  function nice(t) {
+    if (t === ",") return "a comma";
+    if (isEnd(t)) return "the end of a sentence";
+    return t.indexOf("i'") === 0 || t === "i" ? "I" + t.slice(1) : t;
+  }
+
+  function distribution(m, toks, mem) {
+    if (!toks.length || isEnd(toks[toks.length - 1])) {
+      return { counts: m.t1["."] || m.uni, kind: "start" };
+    }
+    var last = toks[toks.length - 1];
+    var prev = toks.length >= 2 ? toks[toks.length - 2] : null;
+    var fellBack = false;
+    if (mem === 2 && prev !== null && !isEnd(prev)) {
+      var key = prev + " " + last;
+      if (m.t2[key]) return { counts: m.t2[key], kind: "two", looked: nice(prev) + " " + nice(last) };
+      fellBack = true;
+    }
+    if (m.t1[last]) return { counts: m.t1[last], kind: fellBack ? "fallback" : "one", looked: nice(last), pair: fellBack ? nice(prev) + " " + nice(last) : null };
+    return { counts: m.uni, kind: "guess", looked: nice(last) };
+  }
+
+  function pick(counts, bold) {
+    var keys = Object.keys(counts);
+    if (!keys.length) return ".";
+    if (bold === "careful") {
+      var best = 0, tied = [];
+      keys.forEach(function (k) { if (counts[k] > best) { best = counts[k]; tied = [k]; } else if (counts[k] === best) tied.push(k); });
+      return tied[Math.floor(Math.random() * tied.length)];
+    }
+    var power = bold === "adventurous" ? 0.5 : 1;
+    var weights = keys.map(function (k) { return Math.pow(counts[k], power); });
+    var total = weights.reduce(function (a, b) { return a + b; }, 0);
+    var r = Math.random() * total;
+    for (var i = 0; i < keys.length; i++) { r -= weights[i]; if (r <= 0) return keys[i]; }
+    return keys[keys.length - 1];
+  }
+
+  function continueFrom(m, startToks) {
+    var toks = startToks.slice(), added = [];
+    for (var i = 0; i < 20; i++) {
+      var d = distribution(m, toks, opts.mem);
+      var w = pick(d.counts, opts.bold);
+      toks.push(w); added.push(w);
+      if (isEnd(w) && added.length >= 5) break;
+    }
+    return added;
+  }
+
+  /* ---------- showing text ---------- */
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  function shown(toks, boldFrom) {
+    var html = "", capNext = true;
+    toks.forEach(function (t, i) {
+      var punct = /^[.!?,]$/.test(t);
+      var word = punct ? t : nice(t);
+      if (!punct && capNext) word = word.charAt(0).toUpperCase() + word.slice(1);
+      capNext = isEnd(t);
+      var piece = esc(word);
+      var cls = (boldFrom !== null && i >= boldFrom) ? (boldFrom === "last" ? "" : "new") : "";
+      if (boldFrom === "last" && i === toks.length - 1) cls = "last";
+      if (cls) piece = '<span class="' + cls + '">' + piece + "</span>";
+      html += (punct || i === 0 ? "" : " ") + piece;
+    });
+    return html;
+  }
+
+  function label(t) {
+    if (t === ",") return ", (a comma)";
+    if (isEnd(t)) return t + " (end the sentence)";
+    var n = nice(t);
+    return n;
+  }
+
+  function renderStory() {
+    if (!story.length) els.story.innerHTML = '<span class="empty">Choose a start, then pick a word.</span>';
+    else els.story.innerHTML = shown(story, "last");
+  }
+
+  function renderChoices() {
+    if (!models) return;
+    var m = models[opts.src];
+    var d = distribution(m, story, opts.mem);
+    var total = 0;
+    var keys = Object.keys(d.counts);
+    keys.forEach(function (k) { total += d.counts[k]; });
+    keys.sort(function (a, b) { return d.counts[b] - d.counts[a] || (a < b ? -1 : 1); });
+
+    var note = "", warn = false;
+    if (d.kind === "start") note = story.length ? "A sentence just ended. Looking at how its sentences begin." : "Nothing written yet. Looking at how its sentences begin.";
+    else if (d.kind === "two") note = "Looking at the last two words: “" + d.looked + "”";
+    else if (d.kind === "one") note = "Looking at the last word: “" + d.looked + "”";
+    else if (d.kind === "fallback") note = "It never saw “" + d.pair + "” together, so it looks at just “" + d.looked + "”.";
+    else { note = "It has never seen “" + d.looked + "”, so it is only guessing from the words it knows best."; warn = true; }
+    els.look.textContent = note;
+    els.look.className = warn ? "warn" : "";
+
+    var top = keys.slice(0, 5);
+    els.choices.innerHTML = top.map(function (k) {
+      var c = d.counts[k], p = Math.round(c / total * 100);
+      return '<button class="choice" data-t="' + esc(k) + '"><span class="w">' + esc(label(k)) + '</span>' +
+             '<span class="track"><span class="fill" style="width:' + p + '%"></span></span>' +
+             '<span class="pct">' + p + '%</span><span class="of">' + c + ' of ' + total + '</span></button>';
+    }).join("");
+    els.more.textContent = keys.length > 5 ? "and " + (keys.length - 5) + " more it has seen" : "";
+  }
+
+  function refresh() { renderStory(); renderChoices(); }
+
+  /* ---------- controls ---------- */
+
+  function setEnabled(on) {
+    els.body.className = on ? "" : "off";
+    Array.prototype.forEach.call(els.body.querySelectorAll("button, input"), function (b) { b.disabled = !on; });
+  }
+
+  function segment(id, key, parse) {
+    var box = $(id);
+    box.addEventListener("click", function (e) {
+      var b = e.target.closest("button");
+      if (!b || b.disabled) return;
+      Array.prototype.forEach.call(box.querySelectorAll("button"), function (x) {
+        var on = x === b;
+        x.className = on ? "on" : "";
+        x.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      opts[key] = parse(b.getAttribute("data-v"));
+      refresh();
+    });
+  }
+  segment("segSrc", "src", String);
+  segment("segMem", "mem", Number);
+  segment("segBold", "bold", String);
+
+  function begin(text) {
+    story = tokenize(text, false);
+    els.compare.style.display = "none";
+    refresh();
+  }
+  els.begin.addEventListener("click", function () { begin(els.start.value); });
+  els.start.addEventListener("keydown", function (e) { if (e.key === "Enter") begin(els.start.value); });
+  $("chips").addEventListener("click", function (e) {
+    var b = e.target.closest("button");
+    if (!b || b.disabled) return;
+    els.start.value = b.getAttribute("data-s");
+    begin(b.getAttribute("data-s"));
+  });
+
+  els.choices.addEventListener("click", function (e) {
+    var b = e.target.closest(".choice");
+    if (!b || b.disabled) return;
+    story.push(b.getAttribute("data-t"));
+    els.compare.style.display = "none";
+    refresh();
+  });
+
+  els.pick.addEventListener("click", function () {
+    var d = distribution(models[opts.src], story, opts.mem);
+    story.push(pick(d.counts, opts.bold));
+    refresh();
+  });
+  els.write.addEventListener("click", function () {
+    story = story.concat(continueFrom(models[opts.src], story));
+    els.compare.style.display = "none";
+    refresh();
+  });
+  els.clear.addEventListener("click", function () {
+    story = []; els.start.value = ""; els.compare.style.display = "none"; refresh();
+  });
+  els.cmp.addEventListener("click", function () {
+    var parts = ["A", "B"].map(function (k) {
+      var added = continueFrom(models[k], story);
+      var all = story.concat(added);
+      return '<div class="cmp" style="--c:var(--' + (k === "A" ? "a" : "b") + ')"><h4>Text ' + k + ' continues</h4>' +
+             shown(all, story.length) + "</div>";
+    });
+    els.compare.innerHTML = parts.join("");
+    els.compare.style.display = "grid";
+  });
+
+  /* ---------- teaching button ---------- */
+
+  function wordCount(s) { return tokenize(s, false).filter(function (t) { return !/^[.!?,]$/.test(t); }).length; }
+
+  function updateCounts() {
+    els.countA.textContent = wordCount(els.taA.value) + " words";
+    els.countB.textContent = wordCount(els.taB.value) + " words";
+  }
+  function setStatus(msg, warn) { els.status.textContent = msg || ""; els.status.className = warn ? "warn" : ""; }
+
+  function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify({ A: els.taA.value, B: els.taB.value })); } catch (e) {} }
+  function load() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (raw) { var p = JSON.parse(raw); if (typeof p.A === "string" && typeof p.B === "string") return p; }
+    } catch (e) {}
+    return STARTER;
+  }
+
+  function teach() {
+    var a = els.taA.value, b = els.taB.value;
+    if (wordCount(a) < 8 || wordCount(b) < 8) {
+      setStatus("Each text needs at least a sentence or two. Add a few more words.", true);
+      return;
+    }
+    models = { A: learn(a), B: learn(b) };
+    story = [];
+    els.start.value = "";
+    els.compare.style.display = "none";
+    setEnabled(true);
+    refresh();
+    setStatus("Done. Text A: " + models.A.words + " words read, " + models.A.vocab + " different. Text B: " + models.B.words + " words read, " + models.B.vocab + " different.", false);
+  }
+
+  els.train.addEventListener("click", teach);
+  els.reset.addEventListener("click", function () {
+    els.taA.value = STARTER.A; els.taB.value = STARTER.B; save(); updateCounts();
+    models = null; story = []; setEnabled(false); els.look.textContent = ""; els.choices.innerHTML = ""; els.more.textContent = "";
+    els.compare.style.display = "none"; renderStory();
+    setStatus("Back to the starter texts. Press Teach when you are ready.", false);
+  });
+  els.copy.addEventListener("click", function () {
+    var text = JSON.stringify({ "Text A": els.taA.value, "Text B": els.taB.value }, null, 2);
+    function done(ok) { setStatus(ok ? "Copied. Paste it somewhere safe to keep the room's texts." : "Could not copy automatically. Select the text in the boxes instead.", !ok); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+    else done(false);
+  });
+  [els.taA, els.taB].forEach(function (t) {
+    t.addEventListener("input", function () {
+      updateCounts(); save();
+      if (models) setStatus("The texts changed. Press Teach again so the storyteller learns them.", true);
+    });
+  });
+
+  var saved = load();
+  els.taA.value = saved.A; els.taB.value = saved.B;
+  updateCounts();
+  setEnabled(false);
+  renderStory();
+  setStatus("Press Teach to start.", false);
+})();
+</script>
+</body>
+</html>
